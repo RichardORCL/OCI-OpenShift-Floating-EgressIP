@@ -44,7 +44,7 @@ windows:
 
 You can create 1 file per worker node or just add multiple worker nodes into one file. The example below show the configuration of 2 workers nodes.
 
-**IMPORTANT:** Ensure you use the correct device name, in our case 'ens5'. Set the correct IP address and prefix. 
+**IMPORTANT:** Ensure you use the correct device name, in my example it is 'ens5', but check in your environment. Set the correct IP address and prefix. 
 
 **IMPORTANT:** All nodes that can run worload pods must have VLAN attached to them and have an individual IP setup in this VLAN
 
