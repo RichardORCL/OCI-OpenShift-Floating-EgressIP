@@ -14,20 +14,41 @@ In this example, we have created a VLAN with the CIDR: 10.0.101.0/24. Hence the 
 2. On each worker node VM add a vNIC attached to the created VLAN
 3. Login to one of the worker nodes and confirm a 2nd NIC is visible and note down the device name (In our example it is ens5)
 
+```
+oc debug node/[your node name]
+chroot /host
+ifconfig
+```
+
+
 <img src="images/vnicsetup.jpg">
 
 
-### Setup IP configuration for worker nodes
+### Setup IP configuration for worker nodes for the new VLAN vNICs
 
-1. Install openshift-nmstate operator via the operator hub, After installation, click on 'create instance' on the operator and create
+1. Install openshift-nmstate operator via the operator hub. After installation, click on 'create instance' on the operator and click 'create'
 
 Check if the NodeNetworkConfigurationPolicy CRD exists
-linux: oc get crds | grep nodenetworkconfigurationpolicies
-windows: oc get crds | findstr nodenetworkconfigurationpolicies
+
+linux: 
+
+```oc get crds | grep nodenetworkconfigurationpolicies```
+
+windows: 
+
+```oc get crds | findstr nodenetworkconfigurationpolicies```
 
 <img src="images/netconfigpolicy.jpg">
 
-2. Create node_config.yaml:
+2. Create node_config.yaml file:
+
+You can create 1 file per worker node or just add multiple worker nodes into one file. The example below show the configuration of 2 workers nodes:
+
+Ensure you use the correct device name, in our case 'ens5'. Set the correct IP address and prefix. 
+
+Reminder: OCI does not provide DHCP on a VLAN, so you need to maintain assigned IP addresses yourself. You need 1 IP address per worker node and you need 1 IP address per egress IP you want to use.
+
+The next-hop-address needs to be set to the VLANs gateway, which is the first available address in the assign CIDR block of the VLAN. In our case this is 10.0.101.1
 
 ```
 apiVersion: nmstate.io/v1
@@ -92,12 +113,24 @@ oc apply -f node_config.yaml
 
 4. enable ipForwarding to the network.operator
 
+run
 ```
 oc edit network.operator
+```
 
+add the line: "ipForwarding: Global"  directly after the gatewayConfig line
+
+```
 			  defaultNetwork:
 			    ovnKubernetesConfig:
 			      egressIPConfig: {}
 			      gatewayConfig:
 			        ipForwarding: Global
 ```
+
+The Opsnshift environment and its worker nodes are now setup correctly to use the VLANs and have the egressIP(s) float on it.
+
+### Setup EgressIP(s) and assign them to namespaces
+
+info to follow....
+
