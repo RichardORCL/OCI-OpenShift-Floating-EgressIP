@@ -50,7 +50,7 @@ You can create 1 file per worker node or just add multiple worker nodes into one
 
 Reminder: OCI does not provide DHCP on a VLAN, so you need to maintain assigned IP addresses yourself. You need 1 IP address per worker node and you need 1 IP address per egress IP you want to use.
 
-The next-hop-address needs to be set to the VLANs gateway, which is the first available address in the assign CIDR block of the VLAN. In our case this is 10.0.101.1
+The next-hop-address needs to be set to the VLANs gateway, which is the first available address in the assign CIDR block of the VLAN. In my example this is 10.0.101.1
 
 ```
 apiVersion: nmstate.io/v1
