@@ -42,9 +42,11 @@ windows:
 
 2. Create node_config.yaml file:
 
-You can create 1 file per worker node or just add multiple worker nodes into one file. The example below show the configuration of 2 workers nodes:
+You can create 1 file per worker node or just add multiple worker nodes into one file. The example below show the configuration of 2 workers nodes.
 
-Ensure you use the correct device name, in our case 'ens5'. Set the correct IP address and prefix. 
+**IMPORTANT:** Ensure you use the correct device name, in our case 'ens5'. Set the correct IP address and prefix. 
+
+**IMPORTANT:** All nodes that can run worload pods must have VLAN attached to them and have an individual IP setup in this VLAN
 
 Reminder: OCI does not provide DHCP on a VLAN, so you need to maintain assigned IP addresses yourself. You need 1 IP address per worker node and you need 1 IP address per egress IP you want to use.
 
