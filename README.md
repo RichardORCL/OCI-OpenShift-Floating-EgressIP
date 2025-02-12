@@ -209,6 +209,15 @@ Using the external access feature on the VLAN in OCI, you can assign each privat
 
 Now when you pods communicate with resources on the internet, per namespace you will have different source public IP Addresses as well.
 
+<img src='images/result.jpg'>
+
+### Known limitation
+
+The amount of VNICs attached to a compute instance (worker node) is tied to the size of the Compute instance: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm#vm-standard
+
+
+
+
 
 
 
