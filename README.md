@@ -148,7 +148,7 @@ The Opsnshift environment and its worker nodes are now setup correctly to use th
 
 ### Setup EgressIP(s) and assign them to namespaces
 
-Lets create 2 example namespaces, each with it's own deployement in it and an label called egress.
+Lets create 2 example namespaces, each with it's own deployement in it and a label called egress.
 
 ```
 oc new-project test1
