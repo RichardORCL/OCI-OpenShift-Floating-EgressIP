@@ -215,6 +215,7 @@ Now when you pods communicate with resources on the internet, per namespace you 
 
 The amount of VNICs attached to a compute instance (worker node) is tied to the size of the Compute instance: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm#vm-standard
 
+If you want to connect to multiple VLANs, keep this limit in mind. There is no restriction to how many EgressIPs you can use within a VLAN. 
 
 
 
