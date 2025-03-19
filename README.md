@@ -14,7 +14,7 @@ https://docs.oracle.com/en-us/iaas/Content/VMware/Tasks/ocvsmanagingl2net.htm
 We can use these VLANs for our OpenShift worker nodes as secondary NIC interfaces and route the EgressIP traffic over.
 
 
-### Create VLAN and assign addition vNIC(s) to worker nodes attached to the VLAN in OCI
+## Create VLAN and assign addition vNIC(s) to worker nodes attached to the VLAN in OCI
 
 1. Create a VLAN and assign it a CIDR range. The first available address in this CIDR range will be used by OCI for the gateway service.
 All other addresses are free to be used. There is no DHCP service in the VLAN.
@@ -38,7 +38,7 @@ ifconfig
 <img src="images/vnicsetup.jpg">
 
 
-### Setup IP configuration for worker nodes for the new VLAN vNICs
+## Setup IP configuration for worker nodes for the new VLAN vNICs
 
 1. Install openshift-nmstate operator via the operator hub. After installation, click on 'create instance' on the operator and click 'create'
 
@@ -146,8 +146,9 @@ add the line: "ipForwarding: Global"  directly after the gatewayConfig line
 
 The Opsnshift environment and its worker nodes are now setup correctly to use the VLANs and have the egressIP(s) float on it.
 
-### Setup EgressIP(s) and assign them to namespaces
+## Setup EgressIP(s) and assign them to namespaces
 
+## Egress Labels 
 We first need to allow the hosts you want to use as egress controllers. We can do this by assigning them
 the correct k8s label:
 
@@ -156,6 +157,9 @@ oc get nodes --show-labels | grep egress
 oc label node <node-name> k8s.ovn.org/egress-assignable=true
 ```
 
+Ensure you have set the egress-assignable=true label to all the hosts you have connected to the VLAN(s)
+
+## Namespaces
 Lets create 2 example namespaces, each with it's own deployement in it and a label called egress.
 
 ```
@@ -209,7 +213,7 @@ oc get egressip
 
 Having completed this setup, the 2 projects will both now have a unique fixed EgressIP. The workernode routing the Egress traffic can now fail over to any other worker node fully automatically.
 
-### Having Public IP addresses for the EgressIP
+## Having Public IP addresses for the EgressIP
 
 Using the external access feature on the VLAN in OCI, you can assign each private IP Address to a Public IP Address. Do make sure that the VLAN has a Internet Gateway service (not NAT Gateway)
 
@@ -219,7 +223,7 @@ Now when you pods communicate with resources on the internet, per namespace you 
 
 <img src='images/result.jpg'>
 
-### Known limitation
+## Known limitation
 
 The amount of VNICs attached to a compute instance (worker node) is tied to the size of the Compute instance: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm#vm-standard
 
