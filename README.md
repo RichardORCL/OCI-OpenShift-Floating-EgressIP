@@ -148,6 +148,14 @@ The Opsnshift environment and its worker nodes are now setup correctly to use th
 
 ### Setup EgressIP(s) and assign them to namespaces
 
+We first need to allow the hosts you want to use as egress controllers. We can do this by assigning them
+the correct k8s label:
+
+```
+oc get nodes --show-labels | grep egress
+oc label node <node-name> k8s.ovn.org/egress-assignable=true
+```
+
 Lets create 2 example namespaces, each with it's own deployement in it and a label called egress.
 
 ```
